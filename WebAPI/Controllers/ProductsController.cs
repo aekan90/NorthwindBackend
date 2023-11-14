@@ -21,11 +21,11 @@ namespace WebAPI.Controllers
             var result = _productService.GetList();
             if (result.Status)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
         }
         [HttpGet("getbyid")]
@@ -34,11 +34,11 @@ namespace WebAPI.Controllers
             var result = _productService.GetById(productId);
             if (result.Status)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
         }
 
@@ -48,11 +48,11 @@ namespace WebAPI.Controllers
             var result = _productService.GetListByCategory(categoryId);
             if (result.Status)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
         }
 
@@ -62,11 +62,11 @@ namespace WebAPI.Controllers
             var result = _productService.Add(product);
             if (result.Status)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
         }
 
@@ -76,11 +76,11 @@ namespace WebAPI.Controllers
             var result = _productService.Update(product);
             if (result.Status)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
         }
 
@@ -90,11 +90,11 @@ namespace WebAPI.Controllers
             var result = _productService.Delete(product);
             if (result.Status)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result);
             }
         }
     }
