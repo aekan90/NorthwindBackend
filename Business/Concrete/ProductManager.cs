@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -12,39 +14,97 @@ namespace Business.Concrete
             _productDal = productDal;
         }
 
-        public void Add(Product product)
+        public Sonuc<bool> Add(Product product)
         {
-            // örnek iş kuralı
-            if (product.ProductID > 0)
+            try
             {
-                _productDal.Add(product);
+                // Örnek iş kuralı
+                if (product.ProductID > 0)
+                {
+                    _productDal.Add(product);
+                    return new Sonuc<bool>(true, Messages.ProductAdded);
+                }
+                else
+                {
+                    return new Sonuc<bool>(false, Messages.ErrorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Sonuc<bool>(false, Messages.ErrorMessage + ex.Message);
+            }
+        }
+
+
+        public Sonuc<bool> Delete(Product product)
+        {
+            try
+            {
+                _productDal.Delete(product);
+                return new Sonuc<bool>(true, Messages.ProductDeleted, true);
+            }
+            catch (Exception ex)
+            {
+                return new Sonuc<bool>(true, Messages.ErrorMessage + ex.Message);
+            }
+        }
+
+        public Sonuc<Product> GetById(int productId)
+        {
+            try
+            {
+                Product data = _productDal.Get(filter: p => p.ProductID == productId);
+                return new Sonuc<Product>(true, Messages.SuccessMessage, data);
+            }
+            catch (Exception ex)
+            {
+                return new Sonuc<Product>(false, Messages.ErrorMessage + ex.Message);
             }
 
         }
 
-        public void Delete(Product product)
+
+        public Sonuc<List<Product>> GetList()
         {
-            _productDal.Delete(product);
+            try
+            {
+                List<Product> data = _productDal.GetList().ToList();
+                return new Sonuc<List<Product>>(true, Messages.SuccessMessage, data);
+            }
+            catch (Exception ex)
+            {
+                return new Sonuc<List<Product>>(false, Messages.ErrorMessage + ex.Message, null);
+            }
         }
 
-        public Product GetById(int productId)
+
+        public Sonuc<List<Product>> GetListByCategory(int categoryId)
         {
-            return _productDal.Get(filter: p => p.ProductID == productId);
+            try
+            {
+                List<Product> data = _productDal.GetList(filter: p => p.CategoryID == categoryId).ToList();
+                return new Sonuc<List<Product>>(true, Messages.SuccessMessage, data);
+            }
+            catch (Exception ex)
+            {
+                // Hata durumunda:
+                return new Sonuc<List<Product>>(false, Messages.ErrorMessage + ex.Message, null);
+            }
         }
 
-        public List<Product> GetList()
+        public Sonuc<bool> Update(Product product)
         {
-            return _productDal.GetList().ToList();
+            try
+            {
+                _productDal.Update(product);
+                return new Sonuc<bool>(true, Messages.SuccessMessage);
+            }
+            catch (Exception ex)
+            {
+                // Hata durumunda:
+                return new Sonuc<bool>(false, Messages.ErrorMessage + ex.Message);
+            }
         }
 
-        public List<Product> GetListByCategory(int categoryId)
-        {
-            return _productDal.GetList(filter: p => p.CategoryID == categoryId).ToList();
-        }
-
-        public void Update(Product product)
-        {
-            _productDal.Update(product);
-        }
     }
 }

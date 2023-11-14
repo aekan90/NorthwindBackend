@@ -1,15 +1,15 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 
 namespace Business.Abstract
 {
     public interface IProductService
     {
-        Product GetById(int ProductId);
-        List<Product> GetList();
-        List<Product> GetListByCategory(int categoryId);
-        void Add(Product product);
-        void Delete(Product product);
-        void Update(Product product);
-
+        Sonuc<Product> GetById(int ProductId);
+        Sonuc<List<Product>> GetList();
+        Sonuc<List<Product>> GetListByCategory(int categoryId);
+        Sonuc<bool> Add(Product product);
+        Sonuc<bool> Delete(Product product);
+        Sonuc<bool> Update(Product product);
     }
 }
