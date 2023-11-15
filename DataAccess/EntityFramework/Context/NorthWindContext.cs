@@ -10,7 +10,7 @@ namespace DataAccess.EntityFramework.Context
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Northwind;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
-
+         
         // DB - Entity Bağlamı
         public DbSet<Product> Products { get; set; }
     }
