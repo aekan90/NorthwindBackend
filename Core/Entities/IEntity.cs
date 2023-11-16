@@ -2,6 +2,6 @@
 {
     public interface IEntity
     {
-
+        // DB imza clası
     }
 }

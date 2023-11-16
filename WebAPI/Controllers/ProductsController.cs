@@ -15,6 +15,20 @@ namespace WebAPI.Controllers
             _productService = productService;
         }
 
+        [HttpPost("add")]
+        public ActionResult Add(Product product)
+        {
+            var result = _productService.Add(product);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
         [HttpGet("getall")]
         public ActionResult GetList()
         {
@@ -46,20 +60,6 @@ namespace WebAPI.Controllers
         public ActionResult GetListByCategory(int categoryId)
         {
             var result = _productService.GetListByCategory(categoryId);
-            if (result.Status)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest(result);
-            }
-        }
-
-        [HttpPost("add")]
-        public ActionResult Add(Product product)
-        {
-            var result = _productService.Add(product);
             if (result.Status)
             {
                 return Ok(result);
